@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:ls-apps/flex-layout.git"
+    "url": "git+ssh://git@github.com/ls-apps/flex-layout.git"
   },
   "scripts": {
     "build": "./build.sh",

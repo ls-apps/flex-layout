@@ -50,11 +50,11 @@
     "reverse.min.css"
   ],
   "bin": {
-    "fl": "./bin/fl.js"
+    "fl": "bin/fl.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:ls-apps/flex-layout.git"
+    "url": "git+ssh://git@github.com/ls-apps/flex-layout.git"
   },
   "type": "module",
   "devDependencies": {
