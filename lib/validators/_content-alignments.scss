@@ -1,0 +1,15 @@
+@use '../config/alignment-config';
+
+@use 'sass:list';
+
+@mixin validate-content-alignments($content-alignments) {
+  @if not $content-alignments or list.length($content-alignments) == 0 {
+    @error '$content-alignments must contain at least one supported alignment.';
+  } @else {
+    @each $alignment in $content-alignments {
+      @if not list.index(alignment-config.$content-alignments, $alignment) {
+        @error 'Content alignment #{$alignment} is not supported.';
+      }
+    }
+  }
+}

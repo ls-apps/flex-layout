@@ -1,0 +1,68 @@
+@use 'config/alignment-config';
+@use 'config/query-config';
+@use 'layout/alignments';
+@use 'layout/directions';
+@use 'layout/fill';
+@use 'layout/flex';
+@use 'layout/gaps';
+@use 'layout/hide';
+@use 'layout/offsets';
+@use 'validators';
+
+@use 'sass:map';
+
+$percentages: 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 !default;
+$pixels: 4, 8, 12, 16, 20, 24, 28, 32 !default;
+$queries: query-config.$query-names !default;
+$content-alignments: alignment-config.$content-alignments !default;
+$item-alignments: alignment-config.$item-alignments !default;
+$with-reverse: false !default;
+$with-alignments: true !default;
+$with-offsets: true !default;
+$with-gaps: true !default;
+$with-flex: true !default;
+$with-fill: true !default;
+$with-hide: true !default;
+
+@include validators.validate-queries($queries);
+
+@if $with-flex {
+  @include validators.validate-percentages($percentages);
+}
+
+@if $with-alignments {
+  @include validators.validate-content-alignments($content-alignments);
+  @include validators.validate-item-alignments($item-alignments);
+}
+
+$media-queries: query-config.create-media-queries($queries);
+$query-compatibilities: null;
+
+@if $with-offsets or $with-gaps or $with-flex {
+  @include validators.validate-pixels($pixels);
+  $query-compatibilities: query-config.create-query-compatibilities($queries);
+}
+
+@each $name, $query in $media-queries {
+  @media only #{$query} {
+    @include directions.generate($name, $with-reverse);
+    @if $with-alignments {
+      @include alignments.generate($name, $content-alignments, $item-alignments);
+    }
+    @if $with-gaps {
+      @include gaps.generate($name, $pixels, map.get($query-compatibilities, $name), $with-reverse);
+    }
+    @if $with-offsets {
+      @include offsets.generate($name, $pixels, map.get($query-compatibilities, $name), $with-reverse);
+    }
+    @if $with-flex {
+      @include flex.generate($name, $pixels, $percentages, map.get($query-compatibilities, $name), $with-gaps, $with-reverse);
+    }
+    @if $with-fill {
+      @include fill.generate($name);
+    }
+    @if $with-hide {
+      @include hide.generate($name);
+    }
+  }
+}

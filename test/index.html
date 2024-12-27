@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Flex Layout Test</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/test/layout.css">
+  <link rel="stylesheet" type="text/css" href="/test/styles.css">
+</head>
+
+<body class="column">
+
+  <div class="flex-50 row column-offset-8">
+
+    <div class="flex row-offset-8-gt-sm row-wrap-gt-sm row-wrap-gap-8-gt-sm column-lt-md column-gap-8-lt-md">
+
+      <div class="card flex-50-gt-sm center">Card 1</div>
+      <div class="card flex-50-gt-sm center">Card 2</div>
+      <div class="card flex-50-gt-sm center">Card 3</div>
+      <div class="card flex-50-gt-sm center">Card 4</div>
+      <div class="card flex-50-gt-sm center">Card 5</div>
+
+    </div>
+
+  </div>
+
+  <div class="row end">
+
+    <div class="flex-20-gt-sm flex-lt-md space-between">
+
+      <div class="card center">Card 1</div>
+      <div class="card center">Card 2</div>
+
+    </div>
+
+  </div>
+
+  <div class="column-offset-32 row flex center-center">
+
+    <div class="flex-50 column">
+      <div class="card center">Card 1</div>
+      <div class="card center">Card 2</div>
+      <div class="card center hide-gt-sm">Card 3</div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

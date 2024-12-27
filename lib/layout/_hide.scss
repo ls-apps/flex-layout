@@ -1,0 +1,5 @@
+@mixin generate($name) {
+  .hide#{$name} {
+    display: none;
+  }
+}

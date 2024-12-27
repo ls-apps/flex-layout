@@ -1,0 +1,33 @@
+@use '../config/alignment-config';
+
+@mixin generate($name, $content-alignments, $item-alignments) {
+  @each $c-alignment in $content-alignments {
+    .#{$c-alignment}#{$name} {
+      display: flex;
+
+      @if $c-alignment == start or $c-alignment == end {
+        justify-content: flex-#{$c-alignment};
+      } @else {
+        justify-content: #{$c-alignment};
+      }
+    }
+
+    @each $i-alignment in $item-alignments {
+      .#{$c-alignment}-#{$i-alignment}#{$name} {
+        display: flex;
+
+        @if $c-alignment == start or $c-alignment == end {
+          justify-content: flex-#{$c-alignment};
+        } @else {
+          justify-content: #{$c-alignment};
+        }
+
+        @if $i-alignment == start or $i-alignment == end {
+          align-items: flex-#{$i-alignment};
+        } @else {
+          align-items: #{$i-alignment};
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@mixin generate($name, $pixels, $query-names, $with-reverse) {
+  @each $px in $pixels {
+    @each $qname in $query-names {
+      .row#{$qname} > .row-offset-#{$px}#{$name},
+      .row-wrap#{$qname} > .row-offset-#{$px}#{$name} {
+        margin-left: #{$px} + 'px';
+      }
+
+      .column#{$qname} > .column-offset-#{$px}#{$name} {
+        margin-top: #{$px} + 'px';
+      }
+
+      @if $with-reverse {
+        .row-reverse#{$qname} > .row-offset-#{$px}#{$name},
+        .row-wrap-reverse#{$qname} > .row-offset-#{$px}#{$name} {
+          margin-right: #{$px} + 'px';
+        }
+
+        .column-reverse#{$qname} > .column-offset-#{$px}#{$name} {
+          margin-bottom: #{$px} + 'px';
+        }
+      }
+    }
+  }
+}

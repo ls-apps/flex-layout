@@ -1,0 +1,91 @@
+@use '../config/query-config';
+
+@use 'sass:map';
+
+@mixin xs($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-xs')} {
+      @content;
+    }
+  }
+}
+
+@mixin sm($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-sm')} {
+      @content;
+    }
+  }
+}
+
+@mixin md($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-md')} {
+      @content;
+    }
+  }
+}
+
+@mixin lg($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-lg')} {
+      @content;
+    }
+  }
+}
+
+@mixin xl($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-xl')} {
+      @content;
+    }
+  }
+}
+
+@mixin gt-xs($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-gt-xs')} {
+      @content;
+    }
+  }
+}
+
+@mixin gt-sm($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-gt-sm')} {
+      @content;
+    }
+  }
+}
+
+@mixin gt-md($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-gt-md')} {
+      @content;
+    }
+  }
+}
+
+@mixin lt-md($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-lt-md')} {
+      @content;
+    }
+  }
+}
+
+@mixin lt-lg($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-lt-lg')} {
+      @content;
+    }
+  }
+}
+
+@mixin lt-xl($selector) {
+  #{$selector} {
+    @media only #{map.get(query-config.$queries, '-lt-xl')} {
+      @content;
+    }
+  }
+}

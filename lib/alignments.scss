@@ -1,0 +1,19 @@
+@use 'config/query-config';
+@use 'layout/alignments';
+@use 'validators';
+
+$queries: ('') !default;
+$content-alignments: null !default;
+$item-alignments: null !default;
+
+@include validators.validate-queries($queries);
+@include validators.validate-content-alignments($content-alignments);
+@include validators.validate-item-alignments($item-alignments);
+
+$media-queries: query-config.create-media-queries($queries);
+
+@each $name, $query in $media-queries {
+  @media only #{$query} {
+    @include alignments.generate($name, $content-alignments, $item-alignments);
+  }
+}

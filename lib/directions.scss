@@ -1,0 +1,16 @@
+@use 'config/query-config';
+@use 'layout/directions';
+@use 'validators';
+
+$queries: ('') !default;
+$with-reverse: false !default;
+
+@include validators.validate-queries($queries);
+
+$media-queries: query-config.create-media-queries($queries);
+
+@each $name, $query in $media-queries {
+  @media only #{$query} {
+    @include directions.generate($name, $with-reverse);
+  }
+}

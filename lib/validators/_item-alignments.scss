@@ -1,0 +1,13 @@
+@use '../config/alignment-config';
+
+@use 'sass:list';
+
+@mixin validate-item-alignments($item-alignments) {
+  @if $item-alignments {
+    @each $alignment in $item-alignments {
+      @if not list.index(alignment-config.$item-alignments, $alignment) {
+        @error 'Item alignment #{$alignment} is not supported.';
+      }
+    }
+  }
+}

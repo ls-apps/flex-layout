@@ -1,0 +1,15 @@
+@use 'config/query-config';
+@use 'layout/hide';
+@use 'validators';
+
+$queries: ('') !default;
+
+@include validators.validate-queries($queries);
+
+$media-queries: query-config.create-media-queries($queries);
+
+@each $name, $query in $media-queries {
+  @media only #{$query} {
+    @include hide.generate($name);
+  }
+}

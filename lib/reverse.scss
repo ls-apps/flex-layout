@@ -1,0 +1,17 @@
+@use 'config/query-config';
+@use 'config/alignment-config';
+
+@use './' as layout with (
+  $percentages: (10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+  $pixels: (4, 8, 12, 16, 20, 24, 28, 32),
+  $queries: query-config.$query-names,
+  $content-alignments: alignment-config.$content-alignments,
+  $item-alignments: alignment-config.$item-alignments,
+  $with-reverse: true,
+  $with-alignments: true,
+  $with-offsets: true,
+  $with-gaps: true,
+  $with-flex: true,
+  $with-fill: true,
+  $with-hide: true
+);

@@ -1,0 +1,15 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+
+@mixin validate-pixels($pixels) {
+  @if not $pixels or list.length($pixels) == 0 {
+    @error '$pixels must contain at least one number.';
+  } @else {
+    @each $px in $pixels {
+      @if meta.type-of($px) != 'number' or round($px) != $px or not math.is-unitless($px) {
+        @error '#{$px} is not a valid number.';
+      }
+    }
+  }
+}

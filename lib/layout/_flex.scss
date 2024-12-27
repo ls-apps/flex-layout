@@ -1,0 +1,76 @@
+@use 'sass:list';
+@use 'sass:string';
+
+@mixin generate($name, $pixels, $percentages, $query-names, $with-gaps, $with-reverse) {
+  .flex#{$name} {
+    display: flex;
+    flex: 1 1 0%;
+  }
+
+  @each $pct in $percentages {
+    .flex-#{$pct}.flex#{$name} {
+      display: flex;
+      max-width: inherit;
+    }
+
+    $exclude: ();
+    @each $qname in $query-names {
+      $exclude: list.append($exclude, string.insert($qname, '.column', 0), comma);
+      @if $with-reverse {
+        $exclude: list.append($exclude, string.insert($qname, '.column-reverse', 0), comma);
+      }
+    }
+
+    :not(:is(#{$exclude})) > .flex-#{$pct}#{$name} {
+      display: flex;
+      flex: 1 1 #{$pct} + '%';
+      max-width: #{$pct} + '%';
+    }
+
+    @each $qname in $query-names {
+      @if $with-gaps {
+        @each $px in $pixels {
+          .row-wrap#{$qname}.row-wrap-gap-#{$px}#{$qname} > .flex-#{$pct}#{$name} {
+            display: flex;
+            flex: 1 1 calc(#{$pct + '%'} - #{$px + 'px'});
+            max-width: calc(#{$pct + '%'} - #{$px + 'px'});
+          }
+
+          @if $with-reverse {
+            .row-wrap-reverse#{$qname}.row-wrap-gap-#{$px}#{$qname} > .flex-#{$pct}#{$name} {
+              display: flex;
+              flex: 1 1 calc(#{$pct + '%'} - #{$px + 'px'});
+              max-width: calc(#{$pct + '%'} - #{$px + 'px'});
+            }
+          }
+        }
+      }
+
+      .row#{$qname} > .flex-#{$pct}#{$name} {
+        display: flex;
+        flex: 1 1 #{$pct} + '%';
+        max-width: #{$pct} + '%';
+      }
+
+      .column#{$qname} > .flex-#{$pct}#{$name} {
+        display: flex;
+        flex: 1 1 #{$pct} + '%';
+        max-height: #{$pct} + '%';
+      }
+
+      @if $with-reverse {
+        .row-reverse#{$qname} > .flex-#{$pct}#{$name} {
+          display: flex;
+          flex: 1 1 #{$pct} + '%';
+          max-width: #{$pct} + '%';
+        }
+
+        .column-reverse#{$qname} > .flex-#{$pct}#{$name} {
+          display: flex;
+          flex: 1 1 #{$pct} + '%';
+          max-height: #{$pct} + '%';
+        }
+      }
+    }
+  }
+}

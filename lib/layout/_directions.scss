@@ -1,0 +1,35 @@
+@mixin generate($name, $with-reverse) {
+  .row#{$name} {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .row-wrap#{$name} {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .column#{$name} {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @if $with-reverse {
+    .row-reverse#{$name} {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+
+    .row-wrap-reverse#{$name} {
+      display: flex;
+      flex-wrap: wrap-reverse;
+      flex-direction: row-reverse;
+    }
+
+    .column-reverse#{$name} {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
+}

@@ -1,0 +1,175 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+
+$query-names: '', '-xs', '-sm', '-md', '-lg', '-xl', '-gt-xs', '-gt-sm', '-gt-md', '-lt-md', '-lt-lg', '-lt-xl';
+
+$queries: (
+  '': 'screen',
+  '-xs': 'screen and (min-width: 0px) and (max-width: 599.99px)',
+  '-sm': 'screen and (min-width: 600px) and (max-width: 959.99px)',
+  '-md': 'screen and (min-width: 960px) and (max-width: 1279.99px)',
+  '-lg': 'screen and (min-width: 1280px) and (max-width: 1919.99px)',
+  '-xl': 'screen and (min-width: 1920px) and (max-width: 99999.99px)',
+  '-gt-xs': 'screen and (min-width: 600px) and (max-width: 99999.99px)',
+  '-gt-sm': 'screen and (min-width: 960px) and (max-width: 99999.99px)',
+  '-gt-md': 'screen and (min-width: 1280px) and (max-width: 99999.99px)',
+  '-lt-md': 'screen and (min-width: 0px) and (max-width: 959.99px)',
+  '-lt-lg': 'screen and (min-width: 0px) and (max-width: 1279.99px)',
+  '-lt-xl': 'screen and (min-width: 0px) and (max-width: 1919.99px)'
+);
+
+$query-compatibilities: (
+  '': (
+    '',
+    '-xs',
+    '-sm',
+    '-md',
+    '-lg',
+    '-xl',
+    '-gt-xs',
+    '-gt-sm',
+    '-gt-md',
+    '-lt-md',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-xs': (
+    '',
+    '-xs',
+    '-lt-md',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-sm': (
+    '',
+    '-sm',
+    '-gt-xs',
+    '-lt-md',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-md': (
+    '',
+    '-md',
+    '-gt-xs',
+    '-gt-sm',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-lg': (
+    '',
+    '-lg',
+    '-gt-xs',
+    '-gt-sm',
+    '-gt-md',
+    '-lt-xl'
+  ),
+  '-xl': (
+    '',
+    '-xl',
+    '-gt-xs',
+    '-gt-sm',
+    '-gt-md'
+  ),
+  '-gt-xs': (
+    '',
+    '-sm',
+    '-md',
+    '-lg',
+    '-xl',
+    '-gt-xs',
+    '-gt-sm',
+    '-gt-md',
+    '-lt-md',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-gt-sm': (
+    '',
+    '-md',
+    '-lg',
+    '-xl',
+    '-gt-xs',
+    '-gt-sm',
+    '-gt-md',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-gt-md': (
+    '',
+    '-lg',
+    '-xl',
+    '-gt-xs',
+    '-gt-sm',
+    '-gt-md',
+    '-lt-xl'
+  ),
+  '-lt-md': (
+    '',
+    '-xs',
+    '-sm',
+    '-gt-xs',
+    '-lt-md',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-lt-lg': (
+    '',
+    '-xs',
+    '-sm',
+    '-md',
+    '-gt-xs',
+    '-gt-sm',
+    '-lt-md',
+    '-lt-lg',
+    '-lt-xl'
+  ),
+  '-lt-xl': (
+    '',
+    '-xs',
+    '-sm',
+    '-md',
+    '-lg',
+    '-gt-xs',
+    '-gt-sm',
+    '-gt-md',
+    '-lt-md',
+    '-lt-lg',
+    '-lt-xl'
+  )
+);
+
+@function insert-hyphen($name) {
+  @if $name != '' and string.index($name, '-') != 1 {
+    @return string.insert($name, '-', 1);
+  } @else {
+    @return $name;
+  }
+}
+
+@function create-media-queries($raw-queries) {
+  $media-queries: ();
+  @each $name in $raw-queries {
+    $name: insert-hyphen($name);
+    $media-queries: map.set($media-queries, $name, map.get($queries, $name));
+  }
+  @return $media-queries;
+}
+
+@function create-query-compatibilities($raw-queries) {
+  $created-query-compatibilities: ();
+  @each $name in $raw-queries {
+    $name: insert-hyphen($name);
+    $list: map.get($query-compatibilities, $name);
+    $compatibilities: ();
+    @each $n in $raw-queries {
+      $n: insert-hyphen($n);
+      @if list.index($list, $n) {
+        $compatibilities: list.append($compatibilities, $n);
+      }
+    }
+    $created-query-compatibilities: map.set($created-query-compatibilities, $name, $compatibilities);
+  }
+  @return $created-query-compatibilities;
+}

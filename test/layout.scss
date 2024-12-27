@@ -1,0 +1,29 @@
+@use '../lib/media-queries';
+
+@use '../lib' with (
+  $pixels: (8, 32),
+  $percentages: (20, 50),
+  $queries: ('', 'gt-sm', 'lt-md')
+);
+
+@include media-queries.xs('div.test') {
+  width: 100%;
+}
+
+@include media-queries.xs('div a') {
+  color: white;
+}
+
+div a {
+  color: red;
+}
+
+span a {
+  color: red;
+}
+
+div {
+  span {
+    color: red;
+  }
+}

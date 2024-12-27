@@ -1,0 +1,21 @@
+@use 'config/query-config';
+@use 'layout/gaps';
+@use 'validators';
+
+@use 'sass:map';
+
+$pixels: null !default;
+$queries: ('') !default;
+$with-reverse: false !default;
+
+@include validators.validate-pixels($pixels);
+@include validators.validate-queries($queries);
+
+$media-queries: query-config.create-media-queries($queries);
+$query-compatibilities: query-config.create-query-compatibilities($queries);
+
+@each $name, $query in $media-queries {
+  @media only #{$query} {
+    @include gaps.generate($name, $pixels, map.get($query-compatibilities, $name), $with-reverse);
+  }
+}

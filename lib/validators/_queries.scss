@@ -1,0 +1,16 @@
+@use '../config/query-config';
+
+@use 'sass:list';
+
+@mixin validate-queries($queries) {
+  @if not $queries or list.length($queries) == 0 {
+    @error '$queries must contain at least one supported media query.';
+  } @else {
+    @each $name in $queries {
+      $name: query-config.insert-hyphen($name);
+      @if not list.index(query-config.$query-names, $name) {
+        @error 'Media-Query #{$name} is not supported.';
+      }
+    }
+  }
+}

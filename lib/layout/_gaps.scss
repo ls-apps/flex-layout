@@ -1,0 +1,39 @@
+@mixin generate($name, $pixels, $query-names, $with-reverse) {
+  @each $px in $pixels {
+    @each $qname in $query-names {
+      .row#{$qname}.row-gap-#{$px}#{$name} > :not(:last-child) {
+        box-sizing: border-box;
+        margin-right: #{$px} + 'px';
+      }
+
+      .row-wrap#{$qname}.row-wrap-gap-#{$px}#{$name} > * {
+        box-sizing: border-box;
+        margin-right: #{$px} + 'px';
+        margin-bottom: #{$px} + 'px';
+      }
+
+      .column#{$qname}.column-gap-#{$px}#{$name} > :not(:last-child) {
+        box-sizing: border-box;
+        margin-bottom: #{$px} + 'px';
+      }
+
+      @if $with-reverse {
+        .row-reverse#{$qname}.row-gap-#{$px}#{$name} > :not(:last-child) {
+          box-sizing: border-box;
+          margin-left: #{$px} + 'px';
+        }
+
+        .row-wrap-reverse#{$qname}.row-wrap-gap-#{$px}#{$name} > * {
+          box-sizing: border-box;
+          margin-top: #{$px} + 'px';
+          margin-left: #{$px} + 'px';
+        }
+
+        .column-reverse#{$qname}.column-gap-#{$px}#{$name} > :not(:last-child) {
+          box-sizing: border-box;
+          margin-top: #{$px} + 'px';
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@ls-apps/flex-layout",
+  "version": "1.0.0",
+  "description": "SCSS / CSS layout framework",
+  "license": "MIT",
+  "homepage": "https://ls-apps.gitlab.io/flex-layout",
+  "bugs": {
+    "url": "https://github.com/ls-apps/flex-layout/issues"
+  },
+  "author": {
+    "name": "Lukas Schmidt"
+  },
+  "funding": [
+    {
+      "type": "ko-fi",
+      "url": "https://ko-fi.com/lukas_schmidt"
+    },
+    {
+      "type": "paypal",
+      "url": "https://paypal.me/luschmidt"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ls-apps/flex-layout.git"
+  },
+  "scripts": {
+    "build": "./build.sh",
+    "build:test": "sass --no-source-map test/layout.scss test/layout.css",
+    "build:test:optimized": "sass --no-source-map test/layout.scss test/layout.css && lib/bin/fl.js optimize test/layout.scss test/layout.css",
+    "test:publish": "cd lib && npm publish --dry-run"
+  },
+  "devDependencies": {
+    "ansi-colors": "^4.1.3",
+    "sass": "^1.83.0"
+  }
+}

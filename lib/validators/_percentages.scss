@@ -1,0 +1,15 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+
+@mixin validate-percentages($percentages) {
+  @if not $percentages or list.length($percentages) == 0 {
+    @error '$percentages must contain at least one number.';
+  } @else {
+    @each $pct in $percentages {
+      @if meta.type-of($pct) != 'number' or round($pct) != $pct or not math.is-unitless($pct) {
+        @error '#{$pct} is not a valid number.';
+      }
+    }
+  }
+}

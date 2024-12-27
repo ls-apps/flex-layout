@@ -1,0 +1,28 @@
+@use 'config/query-config';
+@use 'layout/flex';
+@use 'validators';
+
+@use 'sass:map';
+
+$pixels: null !default;
+$percentages: null !default;
+$queries: ('') !default;
+$with-reverse: false !default;
+$with-gaps: false !default;
+
+@if $pixels {
+  @include validators.validate-pixels($pixels);
+}
+@if $percentages {
+  @include validators.validate-percentages($percentages);
+}
+@include validators.validate-queries($queries);
+
+$media-queries: query-config.create-media-queries($queries);
+$query-compatibilities: query-config.create-query-compatibilities($queries);
+
+@each $name, $query in $media-queries {
+  @media only #{$query} {
+    @include flex.generate($name, $pixels, $percentages, map.get($query-compatibilities, $name), $with-gaps, $with-reverse);
+  }
+}
